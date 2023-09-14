@@ -18,31 +18,27 @@
 package atvBST;
 public class BTNode {
 
-	protected String data;
+	protected Funcionario data;
 	protected BTNode parent;
 	protected BTNode left;
 	protected BTNode right;
 
-	public BTNode() {
-		this("", null);
-	}
-
-	public BTNode(String data) {
+	public BTNode(Funcionario data) {
 		this(data, null);
 	}
 
-	public BTNode(String data, BTNode parent) {
+	public BTNode(Funcionario data, BTNode parent) {
 		this.data = data;
 		this.parent = parent;
 		this.left = null;
 		this.right = null;
 	}
 
-	public String getData() {
+	public Funcionario getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Funcionario data) {
 		this.data = data;
 	}
 
@@ -138,8 +134,8 @@ public class BTNode {
 	public String toString() {
 		return "data: " + data
 				+ ", parent: " + (parent != null ? parent.getData() : "null")
-				+ ", left: " + (left != null ? left.getData() : "null")
-				+ ", right: " + (right != null ? right.getData() : "null")
+				+ ", left: " + (left != null ? left.getData().getId() : "null")
+				+ ", right: " + (right != null ? right.getData().getId() : "null")
 				+ ", isRoot(): " + isRoot()
 				+ ", isLeaf(): " + isLeaf()
 				+ ", getDegree(): " + getDegree()
