@@ -81,4 +81,13 @@ public class Funcionario {
 	public void setSalario(float salario) {
 		this.salario = salario;
 	}
+	
+	@Override
+    public String toString() {
+        return "ID: " + getId() +
+               ", Nome: " + getNome() +
+               ", Cargo: " + getCargo() +
+               ", Sexo: " + getSexo() +
+               ", Salário: " + getSalario();
+	}
 }
