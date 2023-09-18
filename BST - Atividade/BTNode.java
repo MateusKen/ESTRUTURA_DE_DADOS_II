@@ -22,7 +22,7 @@ public class BTNode {
 	protected BTNode parent;
 	protected BTNode left;
 	protected BTNode right;
-
+	
 	public BTNode(Funcionario data) {
 		this(data, null);
 	}
