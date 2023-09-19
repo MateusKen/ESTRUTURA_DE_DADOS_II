@@ -77,7 +77,21 @@ public class BinaryTree {
         //Percorre a subárvore direita
         inOrderTraversalHelper(node.getRight(), funcionarios);
     }
+    
+    public float calculateSalaries() {
+        return calculateSalariesHelper(root);
+    }
 
+    private float calculateSalariesHelper(BTNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        float leftSum = calculateSalariesHelper(node.getLeft());
+        float rightSum = calculateSalariesHelper(node.getRight());
+
+        return leftSum + rightSum + node.getData().getSalario();
+    }
     public String preOrderTraversal() {
         return preOrderTraversalHelper(root);
     }
