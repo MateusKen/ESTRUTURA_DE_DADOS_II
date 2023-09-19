@@ -59,8 +59,9 @@ public class BST_Test {
             opcao = scanner.nextInt();
             switch(opcao) {
             case 1:
-            	//implementar
-            	break;
+            	 float totalSalaries = bst.calculateSalaries();
+            	 System.out.println("Total salary expenses: " + totalSalaries);
+            	 break;
             case 2:
             	System.out.println("Você deseja saber a quantidade de funcionários do sexo:");
             	System.out.println("Masculino - tecle M \nFeminino - tecle F");
