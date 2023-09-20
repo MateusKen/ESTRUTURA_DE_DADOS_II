@@ -60,7 +60,7 @@ public class BST_Test {
             switch(opcao) {
             case 1:
             	 float totalSalaries = bst.calculateSalaries();
-            	 System.out.println("Total gasto com salarios: " + totalSalaries);
+            	 System.out.println("\nTotal gasto com salarios: " + totalSalaries + "\n");
             	 break;
             case 2:
             	System.out.println("Você deseja saber a quantidade de funcionários do sexo:");
