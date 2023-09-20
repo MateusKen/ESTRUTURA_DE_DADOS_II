@@ -1,7 +1,10 @@
 package atvBST;
 
 import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Scanner;
+
 
 public class BST_Test {
 		//--------------- Métodos implementados -------------------
@@ -20,9 +23,32 @@ public class BST_Test {
         return contSexo;
 	}
 	//Total de funcionários de uma determinada categoria
+	public static int contCategoria(BST bst, char escolhaCategoria) {
+		int contCategoria = 0;
+		List<Funcionario> todosFuncionarios = bst.inOrderTraversal();
+        for (Funcionario funcionario : todosFuncionarios) {
+        	if (funcionario.getCategoria() == escolhaCategoria){
+        		contCategoria++;
+        	}
+        }
+        return contCategoria;
+	}
 
 	//Mostrar os dados dos funcionários com idade superior a uma determinada idade
+	public static ArrayList<Funcionario> contIdade(BST bst, int escolhaIdade) {
+	    ArrayList<Funcionario> funcIdade = new ArrayList<>();
+	    List<Funcionario> todosFuncionarios = bst.inOrderTraversal();
+	    for (Funcionario funcionario : todosFuncionarios) {
+	        if (funcionario.getIdade() > escolhaIdade) {
+	            funcIdade.add(funcionario);
+	        }
+	    }
+	    
+	    return funcIdade;
+	}
 
+
+	
 	//main
     public static void main(String[] args) {
     	//Criar uma BST
@@ -59,8 +85,8 @@ public class BST_Test {
             opcao = scanner.nextInt();
             switch(opcao) {
             case 1:
-            	 float totalSalaries = bst.calculateSalaries();
-            	 System.out.println("\nTotal gasto com salarios: " + totalSalaries + "\n");
+            	 float SalarioTotal = bst.calculateSalaries();
+            	 System.out.println("Total salary expenses: " + SalarioTotal);
             	 break;
             case 2:
             	System.out.println("Você deseja saber a quantidade de funcionários do sexo:");
@@ -71,10 +97,27 @@ public class BST_Test {
             	System.out.println("\n");
             	break;
             case 3:
-            	//implementar
+            	System.out.println("Você deseja saber a quantidade de funcionários da categoria:");
+            	System.out.println("Presencial - tecle P \nHome Office - tecle O \nHíbrido - tecle H");
+            	char escolhaCategoria = scanner.next().charAt(0);
+            	qntFuncionarios = contCategoria(bst, escolhaCategoria);
+            	System.out.println("Número de funcionários da Categoria " + escolhaCategoria + ": " + qntFuncionarios);
+            	System.out.println("\n");
             	break;
             case 4:
-            	//implementar
+            	System.out.println("Você deseja saber os dados dos funcionários com idade superior a:");
+            	System.out.println("Digite a idade:");
+            	int escolhaIdade = scanner.nextInt();
+            	System.out.println("Funcionários com idade maior que " + escolhaIdade+ ": \n");
+            	ArrayList<Funcionario> funcionarios = contIdade(bst, escolhaIdade);
+            	if (funcionarios.isEmpty()) {
+            		System.out.println("Nenhum funcionário com idade maior que " + escolhaIdade+ "\n");
+            	} else {
+            		for (Funcionario funcionario : funcionarios) {
+            		  System.out.println(funcionario.toString());
+            	  }
+            	}
+            	System.out.println("\n");
             	break;
             case 5:
             	System.out.println("Programa encerrado");
