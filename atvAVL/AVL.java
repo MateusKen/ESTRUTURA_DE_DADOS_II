@@ -1,114 +1,15 @@
+package atvAVL;
 
 public class AVL extends BST{
+	
+  private int nElem;   // N�mero de elementos (n�s) na �rvore
 
-  private BTNode raiz;
-  private int nElem;   // Número de elementos (nós) na árvore
-  private int fb; // fator de balanceamento
-  
-  public AVL()  { raiz = null;  nElem=0; }
-
-  public AVL(String e){
-    raiz = new BTNode(e);
-    nElem = 1;
-  }
-
-  public BTNode getNoRaiz(){ return raiz; }
-  
-  public int getFb() {
-	  return fb;
-}
-  public void setFb(int fb) {
-	  this.fb = fb;
-  }
-  
-  
-  private int calculaAlturaAVL(){
-  	int cont = -1;
-  	if (!isEmpty()){
-  		return 1 + Math.max(raiz.left.getHeight(), raiz.right.getHeight());
-  	}
-  	return cont;
-  }
-
-  private void setNoRaiz(BTNode novoNoRaiz){
-  	raiz = novoNoRaiz;
-  }
-
+  public AVL()  { super(); }
+ 
   public int getNElem(){ return nElem; }
   public void setNElem(int nElem){ this.nElem = nElem; }
 
-  public boolean isEmpty(){
-    if (raiz == null)
-      return true;
-    else
-      return false;
-  }
 
-  public BTNode searchAVL( String e ){
-    return searchBTNode(raiz, e);
-  }
-  
-  private BTNode searchBTNode( BTNode noAtual, String e ){
-    BTNode aux;
-    if (noAtual != null) {
-      if (noAtual.getData().compareTo( e ) == 0) // Se elemento encontrado
-        return noAtual;
-      else{ // Se n�o encontrado, busca primeiro do lado esquerdo
-        aux = searchBTNode( noAtual.getLeft(), e );
-        if (aux == null)  // Procura do lado direito da �rvore
-          aux = searchBTNode( noAtual.getRight(), e );
-        return aux;
-      }
-    } else // Elemento �dado� n�o encontrado na �rvore
-      return null;
-  }
-
-
-  //Percurso em ordem
-  public void emOrdemSimetrica( BTNode raiz ){
-    if (raiz != null){
-      emOrdemSimetrica( raiz.getLeft() );
-      System.out.println( raiz.getData() );
-      emOrdemSimetrica( raiz.getRight() );
-    }
-  }
-  //Percurso pre ordem
-  public void preOrdem( BTNode raiz ){
-    if (raiz != null){
-      System.out.println( raiz.getData() );
-      preOrdem( raiz.getLeft() );
-      preOrdem( raiz.getRight() );
-    }
-  }
-  //Percurso pos ordem
-  public void posOrdem( BTNode raiz ){
-    if (raiz != null){
-      posOrdem( raiz.getLeft() );
-      posOrdem( raiz.getRight() );
-      System.out.println( raiz.getData() );
-    }
-  }
-  
-  //Percurso em nível
-  public void emNivel(){
-    BTNode noAux;
-    FilaCircular f;
-    if (raiz != null){
-      f = new FilaCircular();
-      f.enqueue( raiz );
-      while( !f.qIsEmpty() ){
-        noAux = (BTNode) f.dequeue ();
-        if (noAux.getLeft() != null)
-          f.enqueue( noAux.getLeft() );
-        if (noAux.getRight() != null)
-          f.enqueue( noAux.getRight() );
-        String pai = null;
-        if (noAux.getParent()!=null) pai = noAux.getParent().getData();
-        System.out.println( noAux.getData()  +" pai:"+pai);
-      }
-    }
-  }
-	
 
   /* rota��o tipo LL */
   private BTNode rotacaoLL(BTNode desbA)
@@ -175,69 +76,56 @@ private BTNode rotacaoRL(BTNode desbA)
 
 private boolean flagInsercao;
 
-public void insereAVL(String k)
+public void insereAVL(String data)
 {
   flagInsercao = false;
-  setNoRaiz(insereBTNode(raiz, k));
-  setNElem(getNElem() + 1 );
+  setRoot( insereBTNode(getRoot(), data));
+  setNElem( getNElem() + 1 );
 }
-
 
 private BTNode insereBTNode(BTNode noAtual, String x )
 {
   if (noAtual != null)
-  { BTNode subDir =  noAtual.getRight();
-  BTNode subEsq =  noAtual.getLeft();
-  int Fb = subDir.getHeight()- subEsq.getHeight();
-  
-  BTNode subEsqEsq = noAtual.getLeft().getLeft();
-  BTNode subEsqDir = noAtual.getLeft().getRight();
-	  int FbEsq = subEsqDir.getHeight() - subEsqEsq.getHeight();
-	  
-	  BTNode subDirEsq = noAtual.getRight().getLeft();
-  BTNode subDirDir = noAtual.getRight().getRight();
-	  int FbDir = subDirDir.getHeight() - subDirEsq.getHeight();
+  {
     if (noAtual.getData().compareTo( x ) > 0)
     {
       noAtual.setLeft( insereBTNode( noAtual.getLeft(), x ) );
       noAtual.getLeft().setParent( noAtual );
       if (flagInsercao)
-      {	
-  
-        switch( Fb ){
-           case -1: Fb = 0;
+      {
+        switch( noAtual.getFb() ){
+           case -1: noAtual.setFb( 0 );
                    flagInsercao = false;
                    break;
-           case 0: Fb = 1;
+           case 0: noAtual.setFb( 1 );
                    break;
-           case 1: 	
-        	   		if (FbEsq == 1)
+           case 1: if (noAtual.getLeft().getFb() == 1)
                     {
                       noAtual = rotacaoLL(noAtual);
                       //Arrumando os fatores ap�s a rota��o
-                      Fb = 0;
-          	   		  FbDir = 0;
+                      noAtual.setFb( 0 );
+                      noAtual.getRight().setFb( 0 );
                     }
                     else
                     {
                       noAtual = rotacaoLR(noAtual);
                       //Arrumando os fatores ap�s a rota��o
-                      if (Fb==0)
+                      if (noAtual.getFb()==0)
                       { //1�Caso
-                    	  FbDir = 0;
-                          FbEsq = 0;
+                        noAtual.getRight().setFb( 0 );
+                        noAtual.getLeft().setFb( 0 );
                       }
-                      else if (Fb == 1)
+                      else if (noAtual.getFb() == 1)
                       { //2�Caso
-                        FbEsq = 0;
-                        FbDir = -1;
+                        noAtual.getLeft().setFb( 0 );
+                        noAtual.getRight().setFb( -1 );
                       }
                       else
                       { //3�Caso
-                        FbEsq = 1;
-                        FbDir = 0;
+                        noAtual.getLeft().setFb( 1 );
+                        noAtual.getRight().setFb( 0 );
                       }
-                      Fb = 0;
+                      noAtual.setFb(0);
                     }
                     flagInsercao = false;
                     break;
@@ -250,40 +138,40 @@ private BTNode insereBTNode(BTNode noAtual, String x )
       noAtual.getRight().setParent( noAtual );
       if ( flagInsercao )
       {
-        switch( Fb ){
-           case -1: if (FbDir == -1)
+        switch( noAtual.getFb() ){
+           case -1: if (noAtual.getRight().getFb() == -1)
                     {
                       noAtual = rotacaoRR(noAtual);
                       //Arrumando os fatores ap�s a rota��o
-                      Fb=0;
-                      FbEsq = 0;
+                      noAtual.setFb(0);
+                      noAtual.getLeft().setFb(0);
                     }
                     else
                     {
                       noAtual = rotacaoRL(noAtual);
                       //Arrumando os fatores ap�s a rota��o
-                      if (Fb==0)
+                      if (noAtual.getFb()==0)
                       { //1�Caso
-                        FbDir = 0;
-                        FbEsq = 0;
+                        noAtual.getRight().setFb(0);
+                        noAtual.getLeft().setFb(0);
                       }
-                      else if (Fb == -1)
+                      else if (noAtual.getFb() == -1)
                       { //2�Caso
-                    	  FbDir = 0;
-                    	  FbEsq = -1;
+                        noAtual.getRight().setFb(0);
+                        noAtual.getLeft().setFb(-1);
                       }
                       else
                       { //3�Caso
-                    	  FbDir = -1;
-                    	  FbEsq = 0;
+                        noAtual.getRight().setFb( -1 );
+                        noAtual.getLeft().setFb( 0 );
                       }
-                      Fb = 0;
+                      noAtual.setFb(0);
                     }
                     flagInsercao = false;
                    break;
-           case 0: Fb = -1;
+           case 0: noAtual.setFb(-1);
                    break;
-           case 1: Fb = 0; 
+           case 1: noAtual.setFb(0); 
                    flagInsercao=false;
                    break;
          }
@@ -304,16 +192,16 @@ private boolean flagRemove;
     
     public boolean removeAVL(String k){
         flagRemove=false;
-        if (raiz == null) {
+        if (getRoot() == null) {
             System.out.println("Erro na remo��o, a �rvore est� vazia !");
             return false;
         }
-        else if (searchAVL(k)==null){
+        else if (search(k)==null){
             System.out.println("Erro na remo��o, elemento n�o existente !");
             return false;
         }
         else {
-            raiz = removeBTNode(raiz, k);
+            setRoot(removeBTNode(getRoot(), k));
             setNElem( getNElem() - 1 );
             return true;
         }
@@ -359,95 +247,76 @@ private boolean flagRemove;
     }
  
     private BTNode balanceamentoEsquerdo (BTNode no){
-    	BTNode subDir =  no.getRight();
-    	  BTNode subEsq =  no.getLeft();
-    	  int Fb = subDir.getHeight()- subEsq.getHeight();
-    	  
-    	  BTNode subEsqEsq = no.getLeft().getLeft();
-    	  BTNode subEsqDir = no.getLeft().getRight();
-    		  int FbEsq = subEsqDir.getHeight() - subEsqEsq.getHeight();
-    		  
-    		  BTNode subDirEsq = no.getRight().getLeft();
-    	  BTNode subDirDir = no.getRight().getRight();
-    		  int FbDir = subDirDir.getHeight() - subDirEsq.getHeight();
-        switch (Fb){
+        switch (no.getFb()){
             case 1:
-                Fb = 0;
+                no.setFb(0);
                 break;
             case 0:
-                Fb = -1;
+                no.setFb(-1);
                 flagRemove=false;
                 break;
             case -1:
-                if (FbDir<=0){
+                BTNode subDir = no.getRight();
+                int fb = subDir.getFb();
+                if (fb<=0){
                     subDir = rotacaoRR(no);
-                    if (FbDir == 0){
-                        Fb = -1;
-                        FbDir = 1;
+                    if (fb == 0){
+                        no.setFb(-1);
+                        subDir.setFb(1);
                         flagRemove = false;
                     }
                     else{
-                        Fb = 0;
-                        FbDir = 0;
+                        no.setFb(0);
+                        subDir.setFb(0);
                     }
                     no = subDir;
                 }
                 else{
                     no = rotacaoRL(no);
-                    if (Fb==0){
-                    	FbDir = 0; FbEsq=0;}
-             		else if (Fb==-1){ Fb=0; 
-             		FbDir = 0; FbEsq=1;}
-             		else {Fb=0; 
-             		FbDir = -1; FbEsq=0;} 
+                    if (no.getFb( )==0){
+                  		no.getRight().setFb(0); no.getLeft().setFb(0);}
+             		else if (no.getFb( )==-1){ no.setFb(0); 
+                  		no.getRight().setFb(0); no.getLeft().setFb(1);}
+             		else {no.setFb(0); 
+                  		no.getRight().setFb(-1); no.getLeft().setFb(0);} 
                 }
         }
         return (no);
     }
     
     private BTNode balanceamentoDireito (BTNode no){
-    	BTNode subDir =  no.getRight();
-  	  BTNode subEsq =  no.getLeft();
-  	  int Fb = subDir.getHeight()- subEsq.getHeight();
-  	  
-  	  BTNode subEsqEsq = no.getLeft().getLeft();
-  	  BTNode subEsqDir = no.getLeft().getRight();
-  		  int FbEsq = subEsqDir.getHeight() - subEsqEsq.getHeight();
-  		  
-  		  BTNode subDirEsq = no.getRight().getLeft();
-  	  BTNode subDirDir = no.getRight().getRight();
-  		  int FbDir = subDirDir.getHeight() - subDirEsq.getHeight();
-        switch (Fb){
+        switch (no.getFb()){
             case -1:
-            	 Fb = 0;
+                no.setFb(0);
                 break;
             case 0:
-            	 Fb = 1;
+                no.setFb(1);
                 flagRemove=false;
                 break;
             case 1:
-                
-                if (FbEsq>=0){
+                BTNode subEsq = no.getLeft();
+                int fb = subEsq.getFb();
+                if (fb>=0){
                     subEsq = rotacaoLL(no);
-                    if (FbEsq == 0){
-                        Fb = 1;
-                        FbEsq=-1;
+                    if (fb == 0){
+                        no.setFb(1);
+                        subEsq.setFb(-1);
                         flagRemove = false;
                     }
                     else{
-                    	Fb = 0;
-                    	FbEsq=0;
+                        no.setFb(0);
+                        subEsq.setFb(0);
                     }
                     no = subEsq;
                 }
                 else{
                     no = rotacaoLR(no);
-                    if (Fb==0){
-                  		FbDir=0; FbEsq=0;}
-             		else if (Fb==1){ Fb=0; 
-             		FbDir=-1; FbEsq=0;}
-             		else {Fb = 0; 
-             		FbDir=0;FbEsq=1;} 
+                    if (no.getFb( )==0){
+                  		no.getRight().setFb(0); no.getLeft().setFb(0);}
+             		else if (no.getFb( )==1){ no.setFb(0); 
+                  		no.getRight().setFb(-1); no.getLeft().setFb(0);}
+             		else {no.setFb(0); 
+                  		no.getRight().setFb(0); no.getLeft().setFb(1);} 
                 }
         }
         return (no);  
