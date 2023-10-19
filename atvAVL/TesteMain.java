@@ -24,9 +24,24 @@ public class TesteMain {
 	   a.insereAVL("Lois");
 	   a.insereAVL("Anne");
 	   
-	   //realização dos percursos
-	   a.emNivel();
-	   System.out.println();
-
+	   System.out.println("Percurso em nível: ");
+	   String emNivel = a.levelOrderTraversal();
+	   System.out.println(emNivel);
+	   System.out.print("\n");
+	   
+	   System.out.println("Percurso em ordem: ");
+	   String emOrdem = a.inOrderTraversal();
+	   System.out.println(emOrdem);
+	   System.out.print("\n");
+	   
+	   System.out.println("Percurso pre ordem: ");
+	   String preOrdem = a.preOrderTraversal();
+	   System.out.println(preOrdem);
+	   System.out.print("\n");
+	   
+	   System.out.println("Percurso pos ordem: ");
+	   String posOrdem = a.postOrderTraversal();
+	   System.out.println(posOrdem);
+	   System.out.print("\n");
 	}
 }
