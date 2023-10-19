@@ -182,6 +182,7 @@ public void insereAVL(String k)
   setNElem(getNElem() + 1 );
 }
 
+
 private BTNode insereBTNode(BTNode noAtual, String x )
 {
   if (noAtual != null)
@@ -299,7 +300,6 @@ private BTNode insereBTNode(BTNode noAtual, String x )
 }
 
 
-
 private boolean flagRemove;
     
     public boolean removeAVL(String k){
@@ -359,76 +359,95 @@ private boolean flagRemove;
     }
  
     private BTNode balanceamentoEsquerdo (BTNode no){
-        switch (no.getFb()){
+    	BTNode subDir =  no.getRight();
+    	  BTNode subEsq =  no.getLeft();
+    	  int Fb = subDir.getHeight()- subEsq.getHeight();
+    	  
+    	  BTNode subEsqEsq = no.getLeft().getLeft();
+    	  BTNode subEsqDir = no.getLeft().getRight();
+    		  int FbEsq = subEsqDir.getHeight() - subEsqEsq.getHeight();
+    		  
+    		  BTNode subDirEsq = no.getRight().getLeft();
+    	  BTNode subDirDir = no.getRight().getRight();
+    		  int FbDir = subDirDir.getHeight() - subDirEsq.getHeight();
+        switch (Fb){
             case 1:
-                no.setFb(0);
+                Fb = 0;
                 break;
             case 0:
-                no.setFb(-1);
+                Fb = -1;
                 flagRemove=false;
                 break;
             case -1:
-                BTNode subDir = no.getRight();
-                int fb = subDir.getFb();
-                if (fb<=0){
+                if (FbDir<=0){
                     subDir = rotacaoRR(no);
-                    if (fb == 0){
-                        no.setFb(-1);
-                        subDir.setFb(1);
+                    if (FbDir == 0){
+                        Fb = -1;
+                        FbDir = 1;
                         flagRemove = false;
                     }
                     else{
-                        no.setFb(0);
-                        subDir.setFb(0);
+                        Fb = 0;
+                        FbDir = 0;
                     }
                     no = subDir;
                 }
                 else{
                     no = rotacaoRL(no);
-                    if (no.getFb( )==0){
-                  		no.getRight().setFb(0); no.getLeft().setFb(0);}
-             		else if (no.getFb( )==-1){ no.setFb(0); 
-                  		no.getRight().setFb(0); no.getLeft().setFb(1);}
-             		else {no.setFb(0); 
-                  		no.getRight().setFb(-1); no.getLeft().setFb(0);} 
+                    if (Fb==0){
+                    	FbDir = 0; FbEsq=0;}
+             		else if (Fb==-1){ Fb=0; 
+             		FbDir = 0; FbEsq=1;}
+             		else {Fb=0; 
+             		FbDir = -1; FbEsq=0;} 
                 }
         }
         return (no);
     }
     
     private BTNode balanceamentoDireito (BTNode no){
-        switch (no.getFb()){
+    	BTNode subDir =  no.getRight();
+  	  BTNode subEsq =  no.getLeft();
+  	  int Fb = subDir.getHeight()- subEsq.getHeight();
+  	  
+  	  BTNode subEsqEsq = no.getLeft().getLeft();
+  	  BTNode subEsqDir = no.getLeft().getRight();
+  		  int FbEsq = subEsqDir.getHeight() - subEsqEsq.getHeight();
+  		  
+  		  BTNode subDirEsq = no.getRight().getLeft();
+  	  BTNode subDirDir = no.getRight().getRight();
+  		  int FbDir = subDirDir.getHeight() - subDirEsq.getHeight();
+        switch (Fb){
             case -1:
-                no.setFb(0);
+            	 Fb = 0;
                 break;
             case 0:
-                no.setFb(1);
+            	 Fb = 1;
                 flagRemove=false;
                 break;
             case 1:
-                BTNode subEsq = no.getLeft();
-                int fb = subEsq.getFb();
-                if (fb>=0){
+                
+                if (FbEsq>=0){
                     subEsq = rotacaoLL(no);
-                    if (fb == 0){
-                        no.setFb(1);
-                        subEsq.setFb(-1);
+                    if (FbEsq == 0){
+                        Fb = 1;
+                        FbEsq=-1;
                         flagRemove = false;
                     }
                     else{
-                        no.setFb(0);
-                        subEsq.setFb(0);
+                    	Fb = 0;
+                    	FbEsq=0;
                     }
                     no = subEsq;
                 }
                 else{
                     no = rotacaoLR(no);
-                    if (no.getFb( )==0){
-                  		no.getRight().setFb(0); no.getLeft().setFb(0);}
-             		else if (no.getFb( )==1){ no.setFb(0); 
-                  		no.getRight().setFb(-1); no.getLeft().setFb(0);}
-             		else {no.setFb(0); 
-                  		no.getRight().setFb(0); no.getLeft().setFb(1);} 
+                    if (Fb==0){
+                  		FbDir=0; FbEsq=0;}
+             		else if (Fb==1){ Fb=0; 
+             		FbDir=-1; FbEsq=0;}
+             		else {Fb = 0; 
+             		FbDir=0;FbEsq=1;} 
                 }
         }
         return (no);  
