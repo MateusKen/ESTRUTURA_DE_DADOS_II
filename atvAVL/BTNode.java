@@ -6,9 +6,10 @@ public class BTNode {
 	protected BTNode parent;
 	protected BTNode left;
 	protected BTNode right;
+	private int fb;
 
 	public BTNode() {
-		this("", null);
+		this("", 0, null, null, null);
 	}
 
 	public BTNode(String data) {
@@ -20,6 +21,22 @@ public class BTNode {
 		this.parent = parent;
 		this.left = null;
 		this.right = null;
+	}
+	
+	public BTNode(String e, int fb, BTNode pai, BTNode subEsq, BTNode subDir) {
+		setData(e);
+		this.fb = fb;
+		setParent(pai);
+		setLeft(subEsq);
+		setRight(subDir);
+	}
+	
+	public int getFb() {
+		return fb;
+	}
+	
+	public void setFb(int fb) {
+		this.fb = fb;
 	}
 
 	public String getData() {
@@ -117,7 +134,7 @@ public class BTNode {
 		
 		return height + 1;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "data: " + data
