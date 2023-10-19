@@ -1,10 +1,9 @@
-package atvAVL;
 
 public class AVL extends BST{
 
   private BTNode raiz;
   private int nElem;   // Número de elementos (nós) na árvore
-  private int fb; // fato de balanceamento
+  private int fb; // fator de balanceamento
   
   public AVL()  { raiz = null;  nElem=0; }
 
@@ -26,7 +25,7 @@ public class AVL extends BST{
   private int calculaAlturaAVL(){
   	int cont = -1;
   	if (!isEmpty()){
-  		
+  		return 1 + Math.max(raiz.left.getHeight(), raiz.right.getHeight());
   	}
   	return cont;
   }
@@ -89,6 +88,7 @@ public class AVL extends BST{
       System.out.println( raiz.getData() );
     }
   }
+  
   //Percurso em nível
   public void emNivel(){
     BTNode noAux;
@@ -104,11 +104,11 @@ public class AVL extends BST{
           f.enqueue( noAux.getRight() );
         String pai = null;
         if (noAux.getParent()!=null) pai = noAux.getParent().getData();
-        System.out.println( noAux.getData() + " fb:" + noAux.getFb() +" pai:"+pai);
+        System.out.println( noAux.getData()  +" pai:"+pai);
       }
     }
   }
-
+	
 
   /* rota��o tipo LL */
   private BTNode rotacaoLL(BTNode desbA)
@@ -178,8 +178,8 @@ private boolean flagInsercao;
 public void insereAVL(String k)
 {
   flagInsercao = false;
-  setNoRaiz( insereBTNode(raiz, k));
-  setNElem( getNElem() + 1 );
+  setNoRaiz(insereBTNode(raiz, k));
+  setNElem(getNElem() + 1 );
 }
 
 private BTNode insereBTNode(BTNode noAtual, String x )
