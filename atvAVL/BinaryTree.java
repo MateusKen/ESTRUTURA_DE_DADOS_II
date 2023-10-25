@@ -1,4 +1,4 @@
-package atvAVL;
+
 
 //imports para a fila usada na levelOrderTraversalHelper(). 
 import java.util.LinkedList;
@@ -160,4 +160,41 @@ public class BinaryTree {
 		return null;
 	}
 
+	
+	public float somaValoresProduto(BTNode node, String nome) {
+	    if (node == null) {
+	        return 0;
+	    }
+
+	    float soma = 0;
+
+	    // Verifica se o nome do produto no nó atual é igual ao nome fornecido
+	    if (node.getData().getNome().equals(nome)) {
+	        // Calcula o valor do estoque do nó atual (produto * quantidade)
+	        soma += (node.getData().getValorUnitario() * node.getData().getQtde());
+	    }
+
+	    // Recursivamente calcula o valor do estoque dos nós filhos
+	    soma += somaValoresProduto(node.getLeft(), nome);
+	    soma += somaValoresProduto(node.getRight(), nome);
+
+	    return soma;
+	}
+	
+	public float somaValores(BTNode node) {
+	    if (node == null) {
+	        return 0;
+	    }
+
+	    float soma = 0;
+
+	    // Calcula o valor do estoque do nó atual (produto * quantidade)
+	    soma += (node.getData().getValorUnitario() * node.getData().getQtde());
+
+	    // Recursivamente calcula o valor do estoque dos nós filhos
+	    soma += somaValores(node.getLeft());
+	    soma += somaValores(node.getRight());
+
+	    return soma;
+	}
 }
