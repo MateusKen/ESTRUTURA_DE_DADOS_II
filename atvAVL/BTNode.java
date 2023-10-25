@@ -1,29 +1,30 @@
 package atvAVL;
 
-public class BTNode {
+public class BTNode{
 
-	protected String data;
+	protected Estoque data;
 	protected BTNode parent;
 	protected BTNode left;
 	protected BTNode right;
 	private int fb;
-
+	
+	
 	public BTNode() {
-		this("", 0, null, null, null);
+		this(null, 0, null, null, null);
 	}
 
-	public BTNode(String data) {
+	public BTNode(Estoque data) {
 		this(data, null);
 	}
 
-	public BTNode(String data, BTNode parent) {
+	public BTNode(Estoque data, BTNode parent) {
 		this.data = data;
 		this.parent = parent;
 		this.left = null;
 		this.right = null;
 	}
 	
-	public BTNode(String e, int fb, BTNode pai, BTNode subEsq, BTNode subDir) {
+	public BTNode(Estoque e, int fb, BTNode pai, BTNode subEsq, BTNode subDir) {
 		setData(e);
 		this.fb = fb;
 		setParent(pai);
@@ -31,6 +32,9 @@ public class BTNode {
 		setRight(subDir);
 	}
 	
+	public int getCodigoProduto() {
+		return data.getCodigoProduto();
+	}
 	public int getFb() {
 		return fb;
 	}
@@ -39,11 +43,11 @@ public class BTNode {
 		this.fb = fb;
 	}
 
-	public String getData() {
+	public Estoque getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Estoque data) {
 		this.data = data;
 	}
 
@@ -147,5 +151,6 @@ public class BTNode {
 				+ ", getLevel(): " + getLevel()
 				+ ", getHeight(): " + getHeight();
 	}
+
 
 }
