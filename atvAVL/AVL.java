@@ -76,18 +76,18 @@ private BTNode rotacaoRL(BTNode desbA)
 
 private boolean flagInsercao;
 
-public void insereAVL(String data)
+public void insereAVL(Estoque data)
 {
   flagInsercao = false;
   setRoot( insereBTNode(getRoot(), data));
   setNElem( getNElem() + 1 );
 }
 
-private BTNode insereBTNode(BTNode noAtual, String x )
+private BTNode insereBTNode(BTNode noAtual, Estoque x )
 {
   if (noAtual != null)
   {
-    if (noAtual.getData().compareTo( x ) > 0)
+    if (noAtual.getCodigoProduto() > x.getCodigoProduto())
     {
       noAtual.setLeft( insereBTNode( noAtual.getLeft(), x ) );
       noAtual.getLeft().setParent( noAtual );
@@ -190,7 +190,7 @@ private BTNode insereBTNode(BTNode noAtual, String x )
 
 private boolean flagRemove;
     
-    public boolean removeAVL(String k){
+    public boolean removeAVL(Estoque k){
         flagRemove=false;
         if (getRoot() == null) {
             System.out.println("Erro na remo��o, a �rvore est� vazia !");
@@ -207,13 +207,13 @@ private boolean flagRemove;
         }
     }
 
-    private BTNode removeBTNode(BTNode noAtual, String x){
-        if (noAtual.getData().compareTo( x ) > 0){
+    private BTNode removeBTNode(BTNode noAtual, Estoque x){
+        if (noAtual.getCodigoProduto() > x.getCodigoProduto()){
             noAtual.setLeft(removeBTNode(noAtual.getLeft(),x));
             if (flagRemove)
                 noAtual = balanceamentoEsquerdo(noAtual);
         }
-        else if (noAtual.getData().compareTo(x)<0){
+        else if (noAtual.getCodigoProduto() < x.getCodigoProduto()){
             noAtual.setRight(removeBTNode(noAtual.getRight(),x));
             if (flagRemove)
                 noAtual = balanceamentoDireito(noAtual);
