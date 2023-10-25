@@ -40,7 +40,19 @@ public class Estoque {
 	public void setValorUnitario(float valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
+
+	public int compareToIgnoreCase(Estoque estoque) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int compareTo(Estoque estoque) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "Código: " + this.codigoProduto + ", Nome: " + this.nome + ", Quantidade: " + this.qtde + ", Valor Unitário: " + this.valorUnitario + "\n";
+	}
 }
