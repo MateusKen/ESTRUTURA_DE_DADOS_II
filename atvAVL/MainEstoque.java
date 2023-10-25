@@ -1,4 +1,4 @@
-package atvAVL;
+
 
 import java.util.Scanner;
 
@@ -50,10 +50,17 @@ public class MainEstoque {
             	
             	break;
             case 3:
-            	//implementar
+            	System.out.print("Digite o nome do produto: ");
+            	nome = scanner.next();
+            	float somaVAL = a.somaValoresProduto(a.getRoot(), nome);
+            	String somaFormatadaVAL = String.format("%.2f", somaVAL);
+            	System.out.print("Valor de "+nome+" em estoque : R$"+somaFormatadaVAL+"\n");
+            	
             	break;
             case 4:
-            	//implementar
+            	float somaFinal = a.somaValores(a.getRoot());
+            	String somaFormatada = String.format("%.2f", somaFinal); // %.2f especifica duas casas decimais
+            	System.out.print("Valor total do estoque: R$" + somaFormatada + "\n");
             	break;
             case 5:
             	//implementar
