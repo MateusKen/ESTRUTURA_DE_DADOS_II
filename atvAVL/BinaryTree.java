@@ -155,4 +155,9 @@ public class BinaryTree {
 				+ ", root => { " + root + " }";				
 	}
 
+	public String toEstoque() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
