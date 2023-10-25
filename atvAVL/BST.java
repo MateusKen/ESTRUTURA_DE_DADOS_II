@@ -10,19 +10,19 @@ public class BST extends BinaryTree {
 		super(root);
 	}
 
-	public BTNode search(String data) {
+	public BTNode search(Estoque data) {
 		return search(data, false);
 	}
 
-	public BTNode searchIgnoreCase(String data) {
+	public BTNode searchIgnoreCase(Estoque data) {
 		return search(data, true);
 	}
 
-	private BTNode search(String data, boolean ignoreCase) {
+	private BTNode search(Estoque data, boolean ignoreCase) {
 		return searchHelper(super.getRoot(), data, ignoreCase);
 	}
 	
-	private BTNode searchHelper(BTNode node, String data, boolean ignoreCase) {
+	private BTNode searchHelper(BTNode node, Estoque data, boolean ignoreCase) {
 		if (node == null) {
 			return null;
 		}
@@ -38,19 +38,19 @@ public class BST extends BinaryTree {
 		}
 	}
 	
-	public void insert(String data) {
+	public void insert(Estoque data) {
 		insert(data, false);
 	}
 	
-	public void insertIgnoreCase(String data) {
+	public void insertIgnoreCase(Estoque data) {
 		insert(data, true);
 	}
 	
-	private void insert(String data, boolean ignoreCase) {
+	private void insert(Estoque data, boolean ignoreCase) {
 		super.setRoot(insertHelper(super.getRoot(), null, data, ignoreCase));
 	}
 	
-	private BTNode insertHelper(BTNode node, BTNode parent, String data, boolean ignoreCase) {
+	private BTNode insertHelper(BTNode node, BTNode parent, Estoque data, boolean ignoreCase) {
 		if (node == null) {
 			return new BTNode(data, parent);
 		}
@@ -68,19 +68,19 @@ public class BST extends BinaryTree {
 		return node;
 	}
 	
-	public void remove(String data) {
+	public void remove(Estoque data) {
 		remove(data, false);
 	}
 	
-	public void removeIgnoreCase(String data) {
+	public void removeIgnoreCase(Estoque data) {
 		remove(data, true);
 	}
 	
-	private void remove(String data, boolean ignoreCase) {
+	private void remove(Estoque data, boolean ignoreCase) {
 		super.setRoot(removeHelper(super.getRoot(), data, ignoreCase));
 	}
 	
-	private BTNode removeHelper(BTNode node, String data, boolean ignoreCase) {
+	private BTNode removeHelper(BTNode node, Estoque data, boolean ignoreCase) {
 		if (node == null) {
 			return null;
 		}
@@ -146,15 +146,15 @@ public class BST extends BinaryTree {
 		}
 	}
 	
-	public BTNode findPredecessor(String data) {
+	public BTNode findPredecessor(Estoque data) {
 		return predecessor(data, false);
 	}
 	
-	public BTNode findPredecessorIgnoreCase(String data) {
+	public BTNode findPredecessorIgnoreCase(Estoque data) {
 		return predecessor(data, true);
 	}
 
-	private BTNode predecessor(String data, boolean ignoreCase) {
+	private BTNode predecessor(Estoque data, boolean ignoreCase) {
 		BTNode node = search(data, ignoreCase);
 		return node == null ? null : predecessorHelper(node, ignoreCase);
 	}
@@ -175,15 +175,15 @@ public class BST extends BinaryTree {
 		}
 	}
 	
-	public BTNode findSuccessor(String data) {
+	public BTNode findSuccessor(Estoque data) {
 		return successor(data, false);
 	}
 	
-	public BTNode findSuccessorIgnoreCase(String data) {
+	public BTNode findSuccessorIgnoreCase(Estoque data) {
 		return successor(data, true);
 	}
 
-	private BTNode successor(String data, boolean ignoreCase) {
+	private BTNode successor(Estoque data, boolean ignoreCase) {
 		BTNode node = search(data, ignoreCase);
 		return node == null ? null : successorHelper(node, ignoreCase);		
 	}
@@ -204,12 +204,17 @@ public class BST extends BinaryTree {
 		}
 	}
 
-	private int diffCompare(String s1, String s2, boolean ignoreCase) {
-		return ignoreCase ? s1.compareToIgnoreCase(s2) : s1.compareTo(s2);
+	private int diffCompare(Estoque estoque1, Estoque estoque2, boolean ignoreCase) {
+		if (ignoreCase) {
+			String codigoProduto1 = String.valueOf(estoque1.getCodigoProduto());
+			String codigoProduto2 = String.valueOf(estoque2.getCodigoProduto());
+			return codigoProduto1.compareToIgnoreCase(codigoProduto2);
+		} else { 
+			return Integer.compare(estoque1.getCodigoProduto(), estoque2.getCodigoProduto());
+		}
 	}
 	
-	@Override
-	public String toString() {
+	public String toEstoque() {
 		return "BST - isEmpty(): " + isEmpty()
 				+ ", getDegree(): " + getDegree()
 				+ ", getHeight(): " + getHeight()
