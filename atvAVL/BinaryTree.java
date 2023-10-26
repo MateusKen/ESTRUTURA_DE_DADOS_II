@@ -181,6 +181,13 @@ public class BinaryTree {
 	    return soma;
 	}
 	
+	public void mostraProdutosinferiores(BTNode node, int valor) {
+		if (node == null)return;
+		if(node.getData().getQtde()< valor) System.out.printf("A quantidade do produto %s está abaixo do valor (%d) indicado\n", node.getData().getNome(), valor);
+		mostraProdutosinferiores(node.getLeft(), valor);
+		mostraProdutosinferiores(node.getRight(), valor);
+	}
+	
 	public float somaValores(BTNode node) {
 	    if (node == null) {
 	        return 0;
