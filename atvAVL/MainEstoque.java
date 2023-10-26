@@ -63,7 +63,9 @@ public class MainEstoque {
             	System.out.print("Valor total do estoque: R$" + somaFormatada + "\n");
             	break;
             case 5:
-            	//implementar
+            	System.out.print("Digite a quantidade desejada: ");
+            	qtde = scanner.nextInt();
+            	a.mostraProdutosinferiores(a.getRoot(), qtde);
             	break;	
             case 6:
             	System.out.println("Programa encerrado");
