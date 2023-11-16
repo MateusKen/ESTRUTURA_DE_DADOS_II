@@ -52,7 +52,7 @@ public class MainChaining {
 	public static void main(String[] args) {
 		System.out.println("***** Hash table - Chaining *****");
 
-		HashTable hashTable = new HashTableChaining(11);
+		HashTable hashTable = new HashTableChaining(7);
 		isEmpty(hashTable);
 		
 		int keys[] = { 50078, 50327, 50720, 50782, 50898, 50013, 50329, 50721, 50897, 50899, 51032 };
