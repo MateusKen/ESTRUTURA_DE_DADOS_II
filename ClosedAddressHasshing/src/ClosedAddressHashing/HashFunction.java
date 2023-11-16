@@ -58,15 +58,13 @@ public class HashFunction {
 		 //Nova Chave
 		 k = Integer.parseInt(quadradoStr);
 		 
-		 System.out.print(k);
 		 
 		 // 3) -----
 		 
 		 //Divisao inteira por 7
-		 k = k / 7;
+		 k = k % m;
 		 
-		 
-		return k % m;
+		return k;
 	}
 	
 }
